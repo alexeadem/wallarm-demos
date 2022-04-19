@@ -2,7 +2,7 @@
 wallarm:
   image:
      repository: wallarm/node
-     tag: 3.6-sidecar
+     tag: 3.7-sidecar
      pullPolicy: Always
   # Wallarm API endpoint: 
   # "api.wallarm.com" for the EU cloud

@@ -4,10 +4,15 @@ metadata:
   name: wallarm-sidecar-nginx-conf
 data:
   default: |
+      log_format wallarm_combined '[$time_local] '
+                            '"$request" $request_id $status '
+                            '$wallarm_serialized_size $wallarm_is_input_valid $wallarm_attack_type $wallarm_attack_type_list $request_length $wallarm_request_cpu_time $wallarm_request_mono_time';
+
       server {
           listen 80 default_server;
           listen [::]:80 default_server ipv6only=on;
           server_name localhost;
+          access_log /var/log/nginx/access.log wallarm_combined;
           root /usr/share/nginx/html;
           index index.html index.htm;
           wallarm_mode {{ .Values.wallarm.mode | quote }};
