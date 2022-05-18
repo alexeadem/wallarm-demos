@@ -8,6 +8,5 @@ draft/
 gotestwaf/
 reports/
 env
-ssl/
 auth
 bin/
