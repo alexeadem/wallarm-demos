@@ -11,16 +11,10 @@
     cd NGINX-PLUS
     sudo docker build --no-cache -t nginxplus-wallarm .
     ```
- 3. Run the Docker image:
+ 3. Run the Docker image (automatically register the node with your Wallarm Credentials):
      ```bash
-    docker run -d -p 80:80 nginxplus-wallarm:latest
-    ```
- 4. Add the Wallarm Node
-    ```bash
-    sudo docker ps   # get the Container ID
-    sudo docker exec -i -t <container_ID> /bin/bash
-    sudo /usr/share/wallarm-common/addnode -H us1.api.wallarm.com
-    # enter depoloyemnt username and password when prompted
+    sudo docker run -d -e DEPLOY_USER='<deploy_username>' -e DEPLOY_PASSWORD='<deploy_password>' -e WALLARM_API_HOST='us1.api.wallarm.com' -p 80:80 nginxplus-wallarm
+    # Note if your Wallarm account is in our EU datacenters, please use api.wallarm.com
     ```
 
 ## NGINX Plus API/Dashboard

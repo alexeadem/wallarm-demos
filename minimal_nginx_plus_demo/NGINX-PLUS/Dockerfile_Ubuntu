@@ -7,7 +7,7 @@ LABEL maintainer="bshope@wallarm.com"
 # instruction to install a specific release
 # ENV NGINX_VERSION   26
 # ENV NJS_VERSION     0.7.2
-# ENV PKG_RELEASE     1~bullseye
+# ENV PKG_RELEASE     1~focal
 
 # Download certificate and key from the customer portal (https://account.f5.com)
 # and copy to the build context
@@ -34,6 +34,10 @@ RUN set -x \
                         apt-utils \
                         curl \
                         nano \
+                        supervisor \
+                        collectd-utils \
+                        iptables \
+                        cron \
                         sudo \
     && \
     NGINX_GPGKEY=573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62; \
@@ -89,10 +93,12 @@ COPY /conf/wallarm-status.conf /etc/nginx/conf.d/
 COPY /conf/wallarm.conf /etc/nginx/conf.d/
 COPY /conf/default.conf /etc/nginx/conf.d/
 
+RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 
 EXPOSE 80 443 8080
 
 STOPSIGNAL SIGQUIT
 
-CMD ["nginx", "-g", "daemon off;"]
-#CMD ["/usr/local/bin/init"]
+#CMD ["nginx"]
+#CMD ["nginx", "-g", "daemon off;"]
+CMD ["sh","./usr/local/bin/init"]
